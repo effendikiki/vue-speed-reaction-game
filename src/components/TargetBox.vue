@@ -27,7 +27,6 @@ export default {
     },
   },
   mounted() {
-    console.log("mounted");
     setTimeout(() => {
       this.showBox = true;
       this.startTimer();

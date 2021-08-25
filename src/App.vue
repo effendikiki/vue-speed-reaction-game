@@ -19,23 +19,18 @@
         Reset
       </button>
     </div>
-    <div v-if="showResult">
-      <br />
-      <h4>
-        {{ resultMessage() }} <br />
-        Your reaction time is <b>{{ reactionTime }}</b> miliseconds
-      </h4>
-    </div>
+    <Result v-if="showResult" :reactionTime="reactionTime" />
     <TargetBox v-if="isPlaying" :delay="delay" @end="endGame" />
   </main>
 </template>
 
 <script>
 import TargetBox from "./components/TargetBox.vue";
+import Result from "./components/Result.vue";
 
 export default {
   name: "App",
-  components: { TargetBox },
+  components: { TargetBox, Result },
   data() {
     return {
       isPlaying: false,
@@ -49,22 +44,13 @@ export default {
       this.delay = 2000 + Math.random() * 3000;
       this.isPlaying = true;
     },
-    reset() {
-      this.isPlaying = false;
-      this.showResult = false;
-    },
     endGame(reactionTime) {
       this.reactionTime = reactionTime;
       this.showResult = true;
     },
-    resultMessage() {
-      if (this.reactionTime <= 400) {
-        return "Pretty fast aren't you? 😉";
-      } else if (this.reactionTime > 400 && this.reactionTime <= 650) {
-        return "Not Bad! 😁";
-      } else {
-        return "Come on you don't even try! 😂";
-      }
+    reset() {
+      this.isPlaying = false;
+      this.showResult = false;
     },
   },
 };
@@ -76,5 +62,6 @@ export default {
 }
 main {
   margin-top: 10%;
+  padding-bottom: 50px;
 }
 </style>
